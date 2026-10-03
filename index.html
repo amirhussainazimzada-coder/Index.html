@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AmirCalm — آرامش از همین‌جا شروع می‌شود</title>
-<meta name="description" content="AmirCalm — فضایی آرام برای گفت‌وگو، نفس کشیدن و پیدا کردن امید.">
+<title>AmirCalm — یک جای امن برای نفس کشیدن</title>
+<meta name="description" content="AmirCalm — جایی آرام برای گفت‌وگو، نفس کشیدن و دوباره پیدا کردن امید.">
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
@@ -16,13 +16,13 @@
 }
 
 :root{
-  --bg:#070d1c;
-  --card:rgba(255,255,255,.055);
-  --border:rgba(255,255,255,.11);
-  --text:#f5f7ff;
-  --muted:#9eacc8;
-  --purple:#8d7aff;
-  --blue:#6f91ff;
+  --text:#f7f8ff;
+  --muted:#a8b4cf;
+  --soft:#cbd4e9;
+  --purple:#9b8cff;
+  --blue:#7395ff;
+  --glass:rgba(255,255,255,.055);
+  --line:rgba(255,255,255,.105);
 }
 
 html{
@@ -30,71 +30,96 @@ html{
 }
 
 body{
-  font-family:'Vazirmatn',sans-serif;
   min-height:100vh;
+  font-family:'Vazirmatn',sans-serif;
   color:var(--text);
   background:
-    radial-gradient(circle at 15% 10%,rgba(91,120,255,.20),transparent 28%),
-    radial-gradient(circle at 85% 25%,rgba(143,92,255,.17),transparent 30%),
-    radial-gradient(circle at 50% 100%,rgba(65,104,220,.13),transparent 35%),
-    linear-gradient(145deg,#060b18,#0c1429 48%,#090d1d);
+    radial-gradient(circle at 15% 8%,rgba(91,124,255,.20),transparent 28%),
+    radial-gradient(circle at 90% 24%,rgba(144,105,255,.16),transparent 30%),
+    radial-gradient(circle at 50% 105%,rgba(74,108,220,.13),transparent 36%),
+    linear-gradient(145deg,#060b17 0%,#0b1428 48%,#080d1d 100%);
   overflow-x:hidden;
 }
 
-/* stars */
+/* آرامش محیط */
 
-.stars,
-.stars:before,
-.stars:after{
+body:before{
+  content:"";
   position:fixed;
-  inset:0;
+  width:330px;
+  height:330px;
+  top:-130px;
+  left:-120px;
+  border-radius:50%;
+  background:rgba(91,121,255,.10);
+  filter:blur(70px);
   pointer-events:none;
 }
 
+body:after{
+  content:"";
+  position:fixed;
+  width:300px;
+  height:300px;
+  right:-130px;
+  bottom:-100px;
+  border-radius:50%;
+  background:rgba(139,103,255,.09);
+  filter:blur(75px);
+  pointer-events:none;
+}
+
+/* ستاره‌ها */
+
 .stars{
+  position:fixed;
+  inset:0;
   z-index:0;
-  opacity:.38;
+  pointer-events:none;
+  opacity:.34;
   background-image:
     radial-gradient(circle,rgba(255,255,255,.8) 1px,transparent 1.5px),
-    radial-gradient(circle,rgba(255,255,255,.5) 1px,transparent 1.5px);
-  background-size:85px 85px,145px 145px;
-  background-position:20px 30px,70px 80px;
+    radial-gradient(circle,rgba(255,255,255,.45) 1px,transparent 1.5px);
+  background-size:88px 88px,145px 145px;
+  background-position:15px 25px,65px 75px;
 }
 
-.stars:before{
+.stars:after{
   content:"";
-  opacity:.35;
+  position:absolute;
+  inset:0;
   background:
-    radial-gradient(circle at 20% 35%,#8ba7ff 0 1px,transparent 2px),
-    radial-gradient(circle at 70% 20%,#fff 0 1px,transparent 2px),
-    radial-gradient(circle at 82% 65%,#a994ff 0 1px,transparent 2px),
-    radial-gradient(circle at 35% 80%,#fff 0 1px,transparent 2px);
-  animation:twinkle 5s ease-in-out infinite alternate;
+    radial-gradient(circle at 23% 18%,rgba(255,255,255,.9) 0 1px,transparent 2px),
+    radial-gradient(circle at 78% 14%,rgba(174,186,255,.9) 0 1px,transparent 2px),
+    radial-gradient(circle at 88% 62%,rgba(255,255,255,.7) 0 1px,transparent 2px),
+    radial-gradient(circle at 34% 79%,rgba(177,160,255,.8) 0 1px,transparent 2px);
+  animation:stars 5s ease-in-out infinite alternate;
 }
 
-@keyframes twinkle{
+@keyframes stars{
   from{opacity:.25}
-  to{opacity:.7}
+  to{opacity:.75}
 }
 
-/* layout */
+/* صفحه */
 
 .container{
   position:relative;
   z-index:2;
   width:100%;
   max-width:560px;
+  min-height:100vh;
   margin:auto;
-  padding:20px 18px 45px;
+  padding:18px 18px 42px;
 }
 
-/* top bar */
+/* هدر */
 
 .topbar{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:8px 2px 20px;
+  padding:5px 2px 16px;
 }
 
 .brand{
@@ -103,18 +128,23 @@ body{
   gap:10px;
   font-size:17px;
   font-weight:700;
+  letter-spacing:.2px;
 }
 
 .brand-icon{
-  width:42px;
-  height:42px;
+  width:43px;
+  height:43px;
   display:flex;
   align-items:center;
   justify-content:center;
-  border-radius:14px;
-  background:rgba(255,255,255,.07);
-  border:1px solid var(--border);
-  box-shadow:0 10px 30px rgba(0,0,0,.2);
+  border-radius:15px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.11),rgba(255,255,255,.035));
+  border:1px solid var(--line);
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.20),
+    inset 0 1px rgba(255,255,255,.12);
+  backdrop-filter:blur(18px);
 }
 
 .status{
@@ -123,52 +153,53 @@ body{
   gap:7px;
   padding:8px 12px;
   border-radius:30px;
-  background:rgba(255,255,255,.045);
-  border:1px solid rgba(255,255,255,.08);
-  color:#b8c4df;
-  font-size:11px;
+  color:#b8c4dc;
+  font-size:10px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.075);
+  backdrop-filter:blur(15px);
 }
 
 .status-dot{
   width:7px;
   height:7px;
   border-radius:50%;
-  background:#7ce2ae;
-  box-shadow:0 0 12px #7ce2ae;
+  background:#81e2af;
+  box-shadow:0 0 12px rgba(129,226,175,.7);
 }
 
-/* hero */
+/* هیرو */
 
 .hero{
   text-align:center;
-  padding:34px 5px 25px;
-  animation:fadeUp .8s ease both;
+  padding:35px 3px 22px;
+  animation:appear .9s ease both;
 }
 
-.moon{
-  width:78px;
-  height:78px;
-  margin:0 auto 22px;
+.safe-icon{
+  width:82px;
+  height:82px;
+  margin:0 auto 23px;
   display:flex;
   align-items:center;
   justify-content:center;
-  border-radius:26px;
-  font-size:35px;
+  border-radius:28px;
+  font-size:36px;
   background:
-    linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.035));
+    linear-gradient(145deg,rgba(255,255,255,.11),rgba(255,255,255,.035));
   border:1px solid rgba(255,255,255,.14);
   box-shadow:
-    0 20px 60px rgba(40,70,180,.22),
-    inset 0 1px rgba(255,255,255,.12);
-  backdrop-filter:blur(18px);
+    0 22px 65px rgba(59,88,190,.22),
+    inset 0 1px rgba(255,255,255,.14);
+  backdrop-filter:blur(20px);
 }
 
 .hero h1{
-  font-size:clamp(30px,8vw,44px);
+  font-size:clamp(29px,7.7vw,43px);
   line-height:1.5;
   font-weight:700;
   letter-spacing:-.5px;
-  background:linear-gradient(100deg,#fff,#d6ddff 55%,#a99cff);
+  background:linear-gradient(105deg,#ffffff,#dce2ff 52%,#aaa0ff);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
@@ -177,58 +208,66 @@ body{
   display:block;
 }
 
-.hero p{
-  max-width:410px;
-  margin:18px auto 0;
+.hero-description{
+  max-width:405px;
+  margin:17px auto 0;
   color:var(--muted);
   font-size:14px;
-  line-height:2.1;
+  line-height:2.15;
 }
 
-/* main action */
+/* دکمه اصلی */
 
-.main-action{
-  margin-top:25px;
+.main-button{
   display:block;
+  margin:27px auto 0;
+  width:100%;
+  max-width:355px;
+  padding:17px 20px;
+  border-radius:20px;
   text-decoration:none;
   color:white;
-  padding:19px 20px;
-  border-radius:21px;
   text-align:center;
-  font-weight:700;
   font-size:15px;
-  background:linear-gradient(135deg,#687fff,#9470e9);
+  font-weight:700;
+  background:
+    linear-gradient(135deg,#6e84ff,#9374e8);
+  border:1px solid rgba(255,255,255,.12);
   box-shadow:
-    0 18px 45px rgba(102,119,255,.22),
-    inset 0 1px rgba(255,255,255,.18);
+    0 18px 48px rgba(103,123,255,.24),
+    inset 0 1px rgba(255,255,255,.2);
   transition:.25s ease;
 }
 
-.main-action:hover{
+.main-button:hover{
   transform:translateY(-3px);
-  box-shadow:0 22px 50px rgba(102,119,255,.32);
+  box-shadow:
+    0 23px 55px rgba(103,123,255,.33),
+    inset 0 1px rgba(255,255,255,.2);
 }
 
-.main-action:active{
+.main-button:active{
   transform:scale(.98);
 }
 
-.main-action small{
+.main-button small{
   display:block;
   margin-top:5px;
   font-size:10px;
   font-weight:400;
-  opacity:.75;
+  opacity:.76;
 }
 
-/* cards */
+/* عنوان */
 
-.section-title{
-  margin:36px 4px 14px;
-  font-size:14px;
-  color:#c9d3ea;
+.section-label{
+  margin:37px 4px 14px;
+  color:#cbd4e8;
+  font-size:13px;
   font-weight:600;
 }
+
+/* کارت‌ها */
 
 .cards{
   display:grid;
@@ -238,15 +277,16 @@ body{
 
 .card{
   position:relative;
-  min-height:145px;
-  padding:19px 16px;
-  border-radius:22px;
-  text-decoration:none;
+  min-height:150px;
+  padding:18px 15px;
+  border-radius:23px;
   color:white;
-  background:var(--card);
-  border:1px solid var(--border);
+  text-decoration:none;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.032));
+  border:1px solid var(--line);
+  box-shadow:0 16px 48px rgba(0,0,0,.15);
   backdrop-filter:blur(20px);
-  box-shadow:0 15px 45px rgba(0,0,0,.14);
   overflow:hidden;
   transition:.25s ease;
 }
@@ -254,132 +294,130 @@ body{
 .card:before{
   content:"";
   position:absolute;
-  width:80px;
-  height:80px;
+  width:95px;
+  height:95px;
+  right:-45px;
+  top:-45px;
   border-radius:50%;
-  right:-35px;
-  top:-35px;
-  background:rgba(126,115,255,.13);
-  filter:blur(3px);
+  background:rgba(126,113,255,.13);
+  filter:blur(4px);
 }
 
 .card:hover{
   transform:translateY(-4px);
-  border-color:rgba(255,255,255,.18);
-  background:rgba(255,255,255,.075);
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.045));
+  border-color:rgba(255,255,255,.17);
 }
 
-.card-icon{
-  width:46px;
-  height:46px;
+.icon-box{
+  position:relative;
+  width:48px;
+  height:48px;
   display:flex;
   align-items:center;
   justify-content:center;
-  border-radius:15px;
-  background:rgba(255,255,255,.075);
-  border:1px solid rgba(255,255,255,.08);
-  font-size:21px;
   margin-bottom:17px;
+  border-radius:16px;
+  background:rgba(255,255,255,.065);
+  border:1px solid rgba(255,255,255,.09);
+  box-shadow:inset 0 1px rgba(255,255,255,.08);
+  font-size:21px;
 }
 
 .card h3{
-  font-size:14px;
+  font-size:13px;
   margin-bottom:7px;
+  font-weight:600;
 }
 
 .card p{
-  color:#8997b5;
-  font-size:11px;
-  line-height:1.8;
+  color:#8997b4;
+  font-size:10.5px;
+  line-height:1.85;
 }
 
-/* dua */
+/* دعا */
 
 .dua{
   margin-top:14px;
   padding:24px 20px;
-  border-radius:24px;
+  border-radius:25px;
   background:
-    linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.035));
-  border:1px solid var(--border);
-  backdrop-filter:blur(20px);
-  box-shadow:0 20px 60px rgba(0,0,0,.17);
+    linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.032));
+  border:1px solid rgba(255,255,255,.11);
+  box-shadow:0 20px 65px rgba(0,0,0,.18);
+  backdrop-filter:blur(22px);
+  animation:appear .9s .35s both;
 }
 
-.dua-top{
+.dua-mark{
+  width:42px;
+  height:42px;
+  margin:0 auto 15px;
   display:flex;
   align-items:center;
-  gap:10px;
-  margin-bottom:15px;
-  color:#dbe3ff;
-  font-size:13px;
-  font-weight:600;
-}
-
-.dua-top span{
-  font-size:20px;
+  justify-content:center;
+  border-radius:14px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  font-size:19px;
 }
 
 .dua p{
   text-align:center;
-  color:#e3e8f5;
+  color:#e7ebf7;
   font-size:13px;
-  line-height:2.25;
+  line-height:2.3;
 }
 
 .amin{
   display:block;
-  text-align:center;
   margin-top:13px;
-  color:#aebcf0;
+  text-align:center;
+  color:#b9c6ec;
   font-size:12px;
 }
 
-/* quote */
+/* جمله آرام */
 
 .quote{
   margin-top:14px;
-  padding:21px;
+  padding:21px 19px;
   text-align:center;
-  border-radius:22px;
-  background:rgba(255,255,255,.035);
-  border:1px solid rgba(255,255,255,.075);
+  border-radius:23px;
+  background:rgba(255,255,255,.032);
+  border:1px solid rgba(255,255,255,.07);
+  animation:appear .9s .45s both;
 }
 
 .quote p{
-  color:#aeb9d0;
-  font-size:12px;
+  color:#aab6ce;
+  font-size:11.5px;
   line-height:2;
 }
 
-.quote strong{
-  display:block;
-  margin-top:9px;
-  color:#d8dfff;
-  font-size:11px;
-}
-
-/* footer */
+/* فوتر */
 
 .footer{
+  padding:30px 5px 4px;
   text-align:center;
-  padding:30px 5px 5px;
-  color:#66748f;
+  color:#66738d;
   font-size:10px;
   line-height:2;
 }
 
-.footer .heart{
-  font-size:14px;
-  margin-bottom:5px;
+.footer-heart{
+  font-size:15px;
+  margin-bottom:4px;
 }
 
-/* animation */
+/* ورود نرم */
 
-@keyframes fadeUp{
+@keyframes appear{
   from{
     opacity:0;
-    transform:translateY(18px);
+    transform:translateY(17px);
   }
   to{
     opacity:1;
@@ -387,16 +425,10 @@ body{
   }
 }
 
-.card:nth-child(1){animation:fadeUp .7s .15s both}
-.card:nth-child(2){animation:fadeUp .7s .25s both}
-.card:nth-child(3){animation:fadeUp .7s .35s both}
-.card:nth-child(4){animation:fadeUp .7s .45s both}
-.dua{animation:fadeUp .8s .5s both}
-.quote{animation:fadeUp .8s .6s both}
-
-/* mobile */
+/* موبایل کوچک */
 
 @media(max-width:380px){
+
   .container{
     padding-left:14px;
     padding-right:14px;
@@ -407,8 +439,12 @@ body{
   }
 
   .card{
-    min-height:138px;
+    min-height:142px;
     padding:16px 13px;
+  }
+
+  .card p{
+    font-size:10px;
   }
 }
 </style>
@@ -420,8 +456,8 @@ body{
 
 <main class="container">
 
-  <!-- Header -->
   <header class="topbar">
+
     <div class="brand">
       <div class="brand-icon">🌙</div>
       <span>AmirCalm</span>
@@ -429,71 +465,74 @@ body{
 
     <div class="status">
       <span class="status-dot"></span>
-      فضای آرام
+      فضای امن
     </div>
+
   </header>
 
 
-  <!-- Hero -->
   <section class="hero">
 
-    <div class="moon">🌙</div>
+    <div class="safe-icon">🌙</div>
 
     <h1>
       آرام باش؛
       <span>هنوز چیزهای زیبایی در راه است.</span>
     </h1>
 
-    <p>
+    <p class="hero-description">
       اینجا جایی‌ست برای نفس کشیدن،
       آرام شدن و دوباره پیدا کردن امید.
     </p>
 
-    <a class="main-action" href="chat.html">
+    <a class="main-button" href="chat.html">
       شروع یک گفت‌وگوی آرام ✨
-      <small>اینجا می‌توانی حرف‌هایت را بدون قضاوت بگویی</small>
+      <small>بدون قضاوت، فقط یک قدم برای آرام‌تر شدن</small>
     </a>
 
   </section>
 
 
-  <!-- Tools -->
-  <div class="section-title">
-    چیزی که همین حالا به آن نیاز داری؟
+  <div class="section-label">
+    برای همین لحظه
   </div>
+
 
   <section class="cards">
 
     <a class="card" href="chat.html">
-      <div class="card-icon">💬</div>
+      <div class="icon-box">💬</div>
       <h3>گفت‌وگوی آرام</h3>
       <p>
-        اگر چیزی روی دلت مانده،
-        شروع کن به حرف زدن.
+        هر چیزی که روی دلت مانده،
+        می‌توانی از همین‌جا شروع کنی.
       </p>
     </a>
+
 
     <a class="card" href="calm.html">
-      <div class="card-icon">🫁</div>
-      <h3>یک دقیقه آرامش</h3>
+      <div class="icon-box">◌</div>
+      <h3>یک دقیقه مکث</h3>
       <p>
-        یک لحظه مکث کن،
-        نفس بکش و برگرد.
+        یک لحظه توقف کن،
+        نفس بکش و آرام‌تر برگرد.
       </p>
     </a>
+
 
     <a class="card" href="dua.html">
-      <div class="card-icon">🤲</div>
+      <div class="icon-box">🤲</div>
       <h3>دعای آرامش</h3>
       <p>
-        چند لحظه با خدا
-        و دل خودت خلوت کن.
+        چند لحظه از شلوغی فاصله بگیر
+        و با دل خودت خلوت کن.
       </p>
     </a>
 
+
     <a class="card" href="chat.html">
-      <div class="card-icon">🌌</div>
-      <h3>من اینجا هستم</h3>
+      <div class="icon-box">✦</div>
+      <h3>یک جای امن</h3>
       <p>
         لازم نیست همه چیز را
         همین حالا حل کنی.
@@ -503,43 +542,43 @@ body{
   </section>
 
 
-  <!-- Dua -->
   <section class="dua">
 
-    <div class="dua-top">
-      <span>🤍</span>
-      دعای امشب
-    </div>
+    <div class="dua-mark">🤍</div>
 
     <p>
-      خدایا من، و هدیه‌ای را که از سوی خودت به من سپردی،
-      همیشه در پناهت نگه دار و دل‌هایمان را مملو از عشق و مهربانی کن.
+      خدایا، من و هدیه‌ای را که از سوی خودت به من سپردی،
+      همیشه در پناه خودت نگه دار.
+      دل‌هایمان را از عشق، مهربانی و آرامش پر کن.
     </p>
 
     <span class="amin">
-      الهی آمین 🌙
+      الهی آمین
     </span>
 
   </section>
 
 
-  <!-- Quote -->
   <section class="quote">
+
     <p>
-      «گاهی لازم نیست جواب همه چیز را پیدا کنی؛
-      فقط کافی‌ست یک نفس عمیق بکشی و ادامه بدهی.»
+      اینجا لازم نیست قوی باشی؛
+      فقط همین که ادامه می‌دهی، کافی‌ست. 🤍
     </p>
 
-    <strong>— AmirCalm</strong>
   </section>
 
 
-  <!-- Footer -->
   <footer class="footer">
-    <div class="heart">🤍</div>
+
+    <div class="footer-heart">🤍</div>
+
     ساخته شده برای لحظه‌هایی که دلت کمی آرامش می‌خواهد.
+
     <br>
+
     AmirCalm
+
   </footer>
 
 </main>
