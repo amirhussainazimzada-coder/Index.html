@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>یک دعای کوچک 🤍</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600&display=swap');
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+  font-family:'Vazirmatn',sans-serif;
+  color:#f5f7ff;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(112,143,255,.18),transparent 32%),
+    radial-gradient(circle at 80% 80%,rgba(166,116,255,.14),transparent 35%),
+    linear-gradient(145deg,#07101d,#0d1930 55%,#11152a);
+  overflow:hidden;
+}
+
+.stars{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+
+.star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:white;
+  border-radius:50%;
+  opacity:.45;
+  animation:twinkle 4s infinite ease-in-out;
+}
+
+.star:nth-child(1){top:14%;left:18%}
+.star:nth-child(2){top:24%;left:76%;animation-delay:1s}
+.star:nth-child(3){top:68%;left:12%;animation-delay:2s}
+.star:nth-child(4){top:78%;left:82%;animation-delay:1.4s}
+.star:nth-child(5){top:42%;left:91%;animation-delay:.5s}
+.star:nth-child(6){top:31%;left:45%;animation-delay:2.5s}
+
+@keyframes twinkle{
+  0%,100%{opacity:.18;transform:scale(1)}
+  50%{opacity:.8;transform:scale(1.7)}
+}
+
+.card{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:460px;
+  padding:35px 25px 28px;
+  text-align:center;
+  border-radius:30px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.1);
+  backdrop-filter:blur(25px);
+  box-shadow:0 25px 80px rgba(0,0,0,.3);
+  animation:appear .8s ease;
+}
+
+.icon{
+  width:70px;
+  height:70px;
+  margin:0 auto 20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:24px;
+  font-size:30px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 0 35px rgba(125,145,255,.12);
+}
+
+h1{
+  font-size:21px;
+  font-weight:500;
+  margin-bottom:8px;
+}
+
+.subtitle{
+  color:#8f9db9;
+  font-size:11px;
+  line-height:2;
+  margin-bottom:28px;
+}
+
+.dua{
+  padding:24px 19px;
+  border-radius:23px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.075);
+}
+
+.dua p{
+  font-size:15px;
+  line-height:2.6;
+  color:#eef1fb;
+  font-weight:400;
+}
+
+.amin{
+  margin-top:18px;
+  font-size:13px;
+  color:#aab8da;
+}
+
+.amen{
+  margin-top:25px;
+  width:100%;
+  padding:13px;
+  border:none;
+  border-radius:17px;
+  font-family:inherit;
+  font-size:13px;
+  color:white;
+  background:linear-gradient(135deg,#6d82ff,#8d6ce4);
+  box-shadow:0 12px 30px rgba(101,116,225,.22);
+  cursor:pointer;
+  transition:.25s;
+}
+
+.amen:active{
+  transform:scale(.97);
+}
+
+.message{
+  height:0;
+  opacity:0;
+  overflow:hidden;
+  color:#9eabc4;
+  font-size:11px;
+  transition:.5s;
+}
+
+.message.show{
+  height:35px;
+  opacity:1;
+  margin-top:15px;
+}
+
+@keyframes appear{
+  from{
+    opacity:0;
+    transform:translateY(18px) scale(.98);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars">
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+</div>
+
+<main class="card">
+
+  <div class="icon">🤍✨</div>
+
+  <h1>یک دعای کوچک برای دل‌ها</h1>
+
+  <div class="subtitle">
+    اگر اینجا آمدی، چند لحظه بمان...
+  </div>
+
+  <div class="dua">
+
+    <p>
+      خدایا من، و هدیه‌ای را که از سوی خودت به من سپردی،
+      همیشه در پناهت نگه دار و دل هایمان را مملو از عشق و مهربانی کن.
+    </p>
+
+    <div class="amin">
+      الهی آمین
+    </div>
+
+  </div>
+
+  <button class="amen" onclick="sayAmen()">
+    آمین 🤍
+  </button>
+
+  <div class="message" id="message">
+    خدا دل‌های خوب را در پناه خودش نگه دارد. ✨
+  </div>
+
+</main>
+
+<script>
+function sayAmen(){
+
+  document.getElementById("message")
+    .classList.add("show");
+
+}
+</script>
+
+</body>
+</html>
