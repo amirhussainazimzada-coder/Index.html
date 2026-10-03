@@ -21,7 +21,7 @@ app.post("/api/chat", async (req, res) => {
     }
 
     const response = await client.responses.create({
-      model: "gpt-6-luna",
+      model: "gpt-5-mini",
       instructions: `
 تو AmirCalm هستی؛ یک همراه آرام، مهربان و حرفه‌ای.
 
