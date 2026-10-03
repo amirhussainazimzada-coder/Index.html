@@ -7,7 +7,11 @@ const port = process.env.PORT || 3000;
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
-
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 app.use(express.json());
 
 app.post("/api/chat", async (req, res) => {
