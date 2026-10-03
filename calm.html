@@ -308,6 +308,67 @@ textarea::placeholder{
   cursor:pointer;
 }
 
+/* دکمه بازگشت به صفحه اصلی */
+
+.home-back{
+  position:fixed;
+  bottom:92px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:30;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+
+  padding:9px 15px;
+  border-radius:18px;
+
+  color:#e8ecff;
+  text-decoration:none;
+
+  font-family:'Vazirmatn',sans-serif;
+  font-size:11px;
+
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.13);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.25),
+    inset 0 1px rgba(255,255,255,.08);
+
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+
+  transition:.25s ease;
+}
+
+.home-back .icon{
+  width:25px;
+  height:25px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:9px;
+
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.08);
+
+  font-size:16px;
+  line-height:1;
+}
+
+.home-back b{
+  font-weight:500;
+}
+
+.home-back:active{
+  transform:translateX(-50%) scale(.94);
+}
+
 .calm-screen{
   position:fixed;
   inset:0;
@@ -524,6 +585,13 @@ placeholder="هر چیزی که دلت می‌خواهد بگو..."
 </div>
 
 </div>
+
+<!-- دکمه برگشت به صفحه اصلی -->
+
+<a href="index.html" class="home-back">
+  <span class="icon">⌂</span>
+  <b>بازگشت به خانه</b>
+</a>
 
 <div class="calm-screen" id="calmScreen">
 
