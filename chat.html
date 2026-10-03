@@ -54,6 +54,44 @@ body{
   50%{opacity:.8;transform:scale(1.8)}
 }
 
+/* دکمه برگشت به صفحه اصلی */
+.home-back{
+  position:fixed;
+  top:16px;
+  right:16px;
+  z-index:50;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:9px 13px;
+  border-radius:16px;
+  color:#dfe5ff;
+  text-decoration:none;
+  font-family:'Vazirmatn',sans-serif;
+  font-size:11px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.11);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.22),
+    inset 0 1px rgba(255,255,255,.08);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  transition:.25s ease;
+}
+
+.home-back .icon{
+  font-size:18px;
+  line-height:1;
+}
+
+.home-back b{
+  font-weight:500;
+}
+
+.home-back:active{
+  transform:scale(.95);
+}
+
 .app{
   position:relative;
   z-index:2;
@@ -269,6 +307,11 @@ textarea::placeholder{
 </head>
 
 <body>
+
+<a href="index.html" class="home-back">
+  <span class="icon">⌂</span>
+  <b>صفحه اصلی</b>
+</a>
 
 <div class="background">
   <div class="star"></div>
