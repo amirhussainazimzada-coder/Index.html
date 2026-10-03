@@ -3,167 +3,413 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AmirCalm</title>
-<meta name="description" content="AmirCalm — جایی برای آرامش، امید و گفت‌وگو.">
+<title>AmirCalm — آرامش از همین‌جا شروع می‌شود</title>
+<meta name="description" content="AmirCalm — فضایی آرام برای گفت‌وگو، نفس کشیدن و پیدا کردن امید.">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
 
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --bg:#070d1c;
+  --card:rgba(255,255,255,.055);
+  --border:rgba(255,255,255,.11);
+  --text:#f5f7ff;
+  --muted:#9eacc8;
+  --purple:#8d7aff;
+  --blue:#6f91ff;
+}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
-font-family:'Vazirmatn',sans-serif;
-min-height:100vh;
-color:#f5f7ff;
-background:
-radial-gradient(circle at 20% 20%,rgba(150,180,255,.16),transparent 32%),
-radial-gradient(circle at 80% 70%,rgba(170,130,255,.14),transparent 35%),
-linear-gradient(145deg,#08111f,#101b32 48%,#11162b);
-overflow-x:hidden;
+  font-family:'Vazirmatn',sans-serif;
+  min-height:100vh;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 10%,rgba(91,120,255,.20),transparent 28%),
+    radial-gradient(circle at 85% 25%,rgba(143,92,255,.17),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(65,104,220,.13),transparent 35%),
+    linear-gradient(145deg,#060b18,#0c1429 48%,#090d1d);
+  overflow-x:hidden;
+}
+
+/* stars */
+
+.stars,
+.stars:before,
+.stars:after{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
 }
 
 .stars{
-position:fixed;
-inset:0;
-pointer-events:none;
-opacity:.45;
-background-image:
-radial-gradient(circle,rgba(255,255,255,.7) 1px,transparent 1px),
-radial-gradient(circle,rgba(255,255,255,.35) 1px,transparent 1px);
-background-size:90px 90px,140px 140px;
-background-position:20px 30px,70px 80px;
+  z-index:0;
+  opacity:.38;
+  background-image:
+    radial-gradient(circle,rgba(255,255,255,.8) 1px,transparent 1.5px),
+    radial-gradient(circle,rgba(255,255,255,.5) 1px,transparent 1.5px);
+  background-size:85px 85px,145px 145px;
+  background-position:20px 30px,70px 80px;
 }
+
+.stars:before{
+  content:"";
+  opacity:.35;
+  background:
+    radial-gradient(circle at 20% 35%,#8ba7ff 0 1px,transparent 2px),
+    radial-gradient(circle at 70% 20%,#fff 0 1px,transparent 2px),
+    radial-gradient(circle at 82% 65%,#a994ff 0 1px,transparent 2px),
+    radial-gradient(circle at 35% 80%,#fff 0 1px,transparent 2px);
+  animation:twinkle 5s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle{
+  from{opacity:.25}
+  to{opacity:.7}
+}
+
+/* layout */
 
 .container{
-position:relative;
-z-index:2;
-width:100%;
-max-width:520px;
-min-height:100vh;
-margin:auto;
-padding:28px 20px 35px;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:560px;
+  margin:auto;
+  padding:20px 18px 45px;
 }
 
-.logo{
-width:74px;
-height:74px;
-border-radius:24px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:32px;
-margin-bottom:25px;
-background:rgba(255,255,255,.07);
-border:1px solid rgba(255,255,255,.13);
-box-shadow:0 15px 45px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.08);
-backdrop-filter:blur(18px);
+/* top bar */
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px 2px 20px;
 }
 
 .brand{
-font-size:18px;
-font-weight:600;
-letter-spacing:.5px;
-margin-bottom:28px;
-color:#dce6ff;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:17px;
+  font-weight:700;
 }
 
+.brand-icon{
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:14px;
+  background:rgba(255,255,255,.07);
+  border:1px solid var(--border);
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:8px 12px;
+  border-radius:30px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.08);
+  color:#b8c4df;
+  font-size:11px;
+}
+
+.status-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#7ce2ae;
+  box-shadow:0 0 12px #7ce2ae;
+}
+
+/* hero */
+
 .hero{
-text-align:center;
-animation:fadeUp 1s ease;
+  text-align:center;
+  padding:34px 5px 25px;
+  animation:fadeUp .8s ease both;
+}
+
+.moon{
+  width:78px;
+  height:78px;
+  margin:0 auto 22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:26px;
+  font-size:35px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.035));
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:
+    0 20px 60px rgba(40,70,180,.22),
+    inset 0 1px rgba(255,255,255,.12);
+  backdrop-filter:blur(18px);
 }
 
 .hero h1{
-font-size:clamp(28px,7vw,42px);
-line-height:1.55;
-font-weight:600;
-margin-bottom:20px;
-background:linear-gradient(90deg,#fff,#cddcff);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+  font-size:clamp(30px,8vw,44px);
+  line-height:1.5;
+  font-weight:700;
+  letter-spacing:-.5px;
+  background:linear-gradient(100deg,#fff,#d6ddff 55%,#a99cff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
-.subtitle{
-font-size:15px;
-line-height:2;
-color:#aebbd5;
-max-width:390px;
-margin:auto;
+.hero h1 span{
+  display:block;
 }
+
+.hero p{
+  max-width:410px;
+  margin:18px auto 0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:2.1;
+}
+
+/* main action */
+
+.main-action{
+  margin-top:25px;
+  display:block;
+  text-decoration:none;
+  color:white;
+  padding:19px 20px;
+  border-radius:21px;
+  text-align:center;
+  font-weight:700;
+  font-size:15px;
+  background:linear-gradient(135deg,#687fff,#9470e9);
+  box-shadow:
+    0 18px 45px rgba(102,119,255,.22),
+    inset 0 1px rgba(255,255,255,.18);
+  transition:.25s ease;
+}
+
+.main-action:hover{
+  transform:translateY(-3px);
+  box-shadow:0 22px 50px rgba(102,119,255,.32);
+}
+
+.main-action:active{
+  transform:scale(.98);
+}
+
+.main-action small{
+  display:block;
+  margin-top:5px;
+  font-size:10px;
+  font-weight:400;
+  opacity:.75;
+}
+
+/* cards */
+
+.section-title{
+  margin:36px 4px 14px;
+  font-size:14px;
+  color:#c9d3ea;
+  font-weight:600;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.card{
+  position:relative;
+  min-height:145px;
+  padding:19px 16px;
+  border-radius:22px;
+  text-decoration:none;
+  color:white;
+  background:var(--card);
+  border:1px solid var(--border);
+  backdrop-filter:blur(20px);
+  box-shadow:0 15px 45px rgba(0,0,0,.14);
+  overflow:hidden;
+  transition:.25s ease;
+}
+
+.card:before{
+  content:"";
+  position:absolute;
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  right:-35px;
+  top:-35px;
+  background:rgba(126,115,255,.13);
+  filter:blur(3px);
+}
+
+.card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(255,255,255,.18);
+  background:rgba(255,255,255,.075);
+}
+
+.card-icon{
+  width:46px;
+  height:46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:15px;
+  background:rgba(255,255,255,.075);
+  border:1px solid rgba(255,255,255,.08);
+  font-size:21px;
+  margin-bottom:17px;
+}
+
+.card h3{
+  font-size:14px;
+  margin-bottom:7px;
+}
+
+.card p{
+  color:#8997b5;
+  font-size:11px;
+  line-height:1.8;
+}
+
+/* dua */
 
 .dua{
-width:100%;
-margin-top:42px;
-padding:25px 21px;
-border-radius:25px;
-background:rgba(255,255,255,.055);
-border:1px solid rgba(255,255,255,.11);
-box-shadow:0 20px 60px rgba(0,0,0,.2);
-backdrop-filter:blur(20px);
-animation:fadeUp 1.3s ease;
+  margin-top:14px;
+  padding:24px 20px;
+  border-radius:24px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.035));
+  border:1px solid var(--border);
+  backdrop-filter:blur(20px);
+  box-shadow:0 20px 60px rgba(0,0,0,.17);
 }
 
-.dua-icon{
-text-align:center;
-font-size:21px;
-margin-bottom:14px;
+.dua-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:15px;
+  color:#dbe3ff;
+  font-size:13px;
+  font-weight:600;
+}
+
+.dua-top span{
+  font-size:20px;
 }
 
 .dua p{
-text-align:center;
-font-size:14px;
-line-height:2.15;
-color:#e5eaf6;
-font-weight:400;
+  text-align:center;
+  color:#e3e8f5;
+  font-size:13px;
+  line-height:2.25;
 }
 
 .amin{
-display:block;
-margin-top:13px;
-text-align:center;
-color:#bfcdf0;
-font-size:13px;
+  display:block;
+  text-align:center;
+  margin-top:13px;
+  color:#aebcf0;
+  font-size:12px;
 }
 
-.start{
-margin-top:32px;
-width:100%;
-max-width:330px;
-border:none;
-padding:16px 25px;
-border-radius:18px;
-color:white;
-font-family:inherit;
-font-size:15px;
-font-weight:600;
-cursor:pointer;
-background:linear-gradient(135deg,#6e83ff,#8f6de8);
-box-shadow:0 12px 35px rgba(110,131,255,.25);
-transition:.25s ease;
+/* quote */
+
+.quote{
+  margin-top:14px;
+  padding:21px;
+  text-align:center;
+  border-radius:22px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.075);
 }
 
-.start:hover{
-transform:translateY(-2px);
-box-shadow:0 17px 40px rgba(110,131,255,.35);
+.quote p{
+  color:#aeb9d0;
+  font-size:12px;
+  line-height:2;
 }
 
-.start:active{
-transform:scale(.98);
+.quote strong{
+  display:block;
+  margin-top:9px;
+  color:#d8dfff;
+  font-size:11px;
 }
+
+/* footer */
 
 .footer{
-margin-top:32px;
-font-size:11px;
-color:#71809c;
-text-align:center;
+  text-align:center;
+  padding:30px 5px 5px;
+  color:#66748f;
+  font-size:10px;
+  line-height:2;
 }
 
+.footer .heart{
+  font-size:14px;
+  margin-bottom:5px;
+}
+
+/* animation */
+
 @keyframes fadeUp{
-from{opacity:0;transform:translateY(18px)}
-to{opacity:1;transform:translateY(0)}
+  from{
+    opacity:0;
+    transform:translateY(18px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.card:nth-child(1){animation:fadeUp .7s .15s both}
+.card:nth-child(2){animation:fadeUp .7s .25s both}
+.card:nth-child(3){animation:fadeUp .7s .35s both}
+.card:nth-child(4){animation:fadeUp .7s .45s both}
+.dua{animation:fadeUp .8s .5s both}
+.quote{animation:fadeUp .8s .6s both}
+
+/* mobile */
+
+@media(max-width:380px){
+  .container{
+    padding-left:14px;
+    padding-right:14px;
+  }
+
+  .hero h1{
+    font-size:28px;
+  }
+
+  .card{
+    min-height:138px;
+    padding:16px 13px;
+  }
 }
 </style>
 </head>
@@ -174,46 +420,129 @@ to{opacity:1;transform:translateY(0)}
 
 <main class="container">
 
-<div class="logo">🌙</div>
+  <!-- Header -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">🌙</div>
+      <span>AmirCalm</span>
+    </div>
 
-<div class="brand">AmirCalm</div>
+    <div class="status">
+      <span class="status-dot"></span>
+      فضای آرام
+    </div>
+  </header>
 
-<section class="hero">
-<h1>آرام باش؛<br>هنوز چیزهای زیبایی در راه است.</h1>
 
-<p class="subtitle">
-اینجا جایی‌ست برای نفس کشیدن، آرام شدن و دوباره پیدا کردن امید.
-</p>
-</section>
+  <!-- Hero -->
+  <section class="hero">
 
-<section class="dua">
+    <div class="moon">🌙</div>
 
-<div class="dua-icon">🤍</div>
+    <h1>
+      آرام باش؛
+      <span>هنوز چیزهای زیبایی در راه است.</span>
+    </h1>
 
-<p>
-خدایا من، و هدیه‌ای را که از سوی خودت به من سپردی،
-همیشه در پناهت نگه دار و دل‌هایمان را مملو از عشق و مهربانی کن.
-</p>
+    <p>
+      اینجا جایی‌ست برای نفس کشیدن،
+      آرام شدن و دوباره پیدا کردن امید.
+    </p>
 
-<span class="amin">الهی آمین 🌙</span>
+    <a class="main-action" href="chat.html">
+      شروع یک گفت‌وگوی آرام ✨
+      <small>اینجا می‌توانی حرف‌هایت را بدون قضاوت بگویی</small>
+    </a>
 
-</section>
+  </section>
 
-<button class="start" onclick="startCalm()">
-شروع یک گفت‌وگوی آرام ✨
-</button>
 
-<div class="footer">
-ساخته شده برای لحظه‌هایی که دلت کمی آرامش می‌خواهد.
-</div>
+  <!-- Tools -->
+  <div class="section-title">
+    چیزی که همین حالا به آن نیاز داری؟
+  </div>
+
+  <section class="cards">
+
+    <a class="card" href="chat.html">
+      <div class="card-icon">💬</div>
+      <h3>گفت‌وگوی آرام</h3>
+      <p>
+        اگر چیزی روی دلت مانده،
+        شروع کن به حرف زدن.
+      </p>
+    </a>
+
+    <a class="card" href="calm.html">
+      <div class="card-icon">🫁</div>
+      <h3>یک دقیقه آرامش</h3>
+      <p>
+        یک لحظه مکث کن،
+        نفس بکش و برگرد.
+      </p>
+    </a>
+
+    <a class="card" href="dua.html">
+      <div class="card-icon">🤲</div>
+      <h3>دعای آرامش</h3>
+      <p>
+        چند لحظه با خدا
+        و دل خودت خلوت کن.
+      </p>
+    </a>
+
+    <a class="card" href="chat.html">
+      <div class="card-icon">🌌</div>
+      <h3>من اینجا هستم</h3>
+      <p>
+        لازم نیست همه چیز را
+        همین حالا حل کنی.
+      </p>
+    </a>
+
+  </section>
+
+
+  <!-- Dua -->
+  <section class="dua">
+
+    <div class="dua-top">
+      <span>🤍</span>
+      دعای امشب
+    </div>
+
+    <p>
+      خدایا من، و هدیه‌ای را که از سوی خودت به من سپردی،
+      همیشه در پناهت نگه دار و دل‌هایمان را مملو از عشق و مهربانی کن.
+    </p>
+
+    <span class="amin">
+      الهی آمین 🌙
+    </span>
+
+  </section>
+
+
+  <!-- Quote -->
+  <section class="quote">
+    <p>
+      «گاهی لازم نیست جواب همه چیز را پیدا کنی؛
+      فقط کافی‌ست یک نفس عمیق بکشی و ادامه بدهی.»
+    </p>
+
+    <strong>— AmirCalm</strong>
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="heart">🤍</div>
+    ساخته شده برای لحظه‌هایی که دلت کمی آرامش می‌خواهد.
+    <br>
+    AmirCalm
+  </footer>
 
 </main>
-
-<script>
-function startCalm(){
-alert("به زودی اینجا با AmirCalm گفت‌وگو می‌کنی 🤍");
-}
-</script>
 
 </body>
 </html>
