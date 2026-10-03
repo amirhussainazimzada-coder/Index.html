@@ -3,9 +3,15 @@ import OpenAI from "openai";
 
 const app = express();
 const port = process.env.PORT || 3000;
+const apiKey = process.env.OPENAI_API_KEY
+  ?.replace(/[\u200B-\u200D\u200E\u200F\uFEFF]/g, "")
+  .trim();
 
 const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
+  apiKey
+});
+
+  
 });
 
 app.use((req, res, next) => {
