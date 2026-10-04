@@ -162,4 +162,4 @@ app.post("/api/chat", async (req, res) => {
 
 app.listen(port, "0.0.0.0", () => {
 
-  console.log(`AmirCalm server running on port ${port
+  console.log(`AmirCalm server running on port ${port}`);
