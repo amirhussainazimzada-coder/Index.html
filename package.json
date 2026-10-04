@@ -1,12 +1,25 @@
 {
+
   "name": "amircalm-ai",
+
   "version": "1.0.0",
+
   "type": "module",
+
   "scripts": {
+
     "start": "node server.js"
+
   },
+
   "dependencies": {
+
     "express": "^5.1.0",
-    "openai": "^6.1.0"
+
+    "openai": "^6.1.0",
+
+    "node-appwrite": "^19.0.0"
+
   }
+
 }
