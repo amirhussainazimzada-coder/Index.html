@@ -6,12 +6,6 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-const client = new OpenAI({
-
-  apiKey: process.env.OPENAI_API_KEY
-
-});
-
 app.use(express.json());
 
 app.use((req, res, next) => {
@@ -21,12 +15,6 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
 
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") {
-
-    return res.status(204).end();
-
-  }
 
   next();
 
@@ -60,13 +48,35 @@ app.post("/api/chat", async (req, res) => {
 
   try {
 
-    const message = req.body?.message;
+    const userMessage = req.body?.message;
 
-    if (!message || typeof message !== "string") {
+    if (!userMessage || typeof userMessage !== "string") {
 
       return res.status(400).json({
 
-        error: "پیام خالی است."
+        error: "پیام نامعتبر است."
+
+      });
+
+    }
+
+    const rawKey = process.env.OPENAI_API_KEY || "";
+
+    // حذف کاراکترهای مخفی احتمالی و فاصله‌های اضافی
+
+    const apiKey = rawKey
+
+      .replace(/[\u200B-\u200D\u200E\u200F\uFEFF]/g, "")
+
+      .trim();
+
+    if (!apiKey) {
+
+      console.error("OPENAI_API_KEY is missing");
+
+      return res.status(500).json({
+
+        error: "کلید OpenAI تنظیم نشده است."
 
       });
 
@@ -74,47 +84,65 @@ app.post("/api/chat", async (req, res) => {
 
     console.log("SENDING TO OPENAI");
 
-    const response = await client.responses.create({
+    const client = new OpenAI({
 
-      model: "gpt-5-mini",
-
-      instructions: `
-
-تو AmirCalm هستی؛ یک همراه آرام، مهربان و بسیار کمک‌کننده.
-
-تمرکز تو فقط روی کمک به حال و زندگی کاربر است:
-
-آرامش، استرس، اضطراب، احساسات، روابط، اعتمادبه‌نفس، انگیزه، درس، کار، عادت‌ها و مشکلات روزمره.
-
-اول حرف کاربر را بفهم و احساسش را جدی بگیر؛ بعد، اگر لازم بود، راهکارهای مشخص و عملی بده.
-
-از نصیحت‌های کلیشه‌ای و جملات توخالی دوری کن.
-
-اگر برای فهمیدن مشکل لازم است، سؤال کوتاه و هوشمندانه بپرس.
-
-وارد سیاست، جنگ، اخبار، بحث‌های جناحی یا موضوعات نامرتبط نشو.
-
-خودت را انسان یا داکتر واقعی معرفی نکن و تشخیص قطعی پزشکی یا روان‌پزشکی نده.
-
-اگر موضوع جدی و خطرناک بود، مسئولانه کاربر را به کمک حرفه‌ای یا فوری هدایت کن.
-
-به زبان خود کاربر پاسخ بده.
-
-لحن تو گرم، آرام، محترمانه، بدون قضاوت و طبیعی باشد.
-
-هدف این است که کاربر احساس کند شنیده شده و بعد از گفتگو یک قدم روشن برای بهتر شدن دارد.
-
-`,
-
-      input: message
+      apiKey: apiKey
 
     });
 
+    const response = await client.responses.create({
+
+      model: "gpt-6-luna",
+
+      instructions: `
+
+تو همراه هوشمند AmirCalm هستی.
+
+وظیفه‌ات کمک به آرامش، سلامت روانی عمومی، رشد شخصی و حل مشکلات روزمره کاربر است.
+
+با مهربانی، آرامش و بدون قضاوت صحبت کن.
+
+اول حرف کاربر را خوب درک کن و اگر لازم بود یک سؤال کوتاه و هوشمندانه بپرس.
+
+بعد راهکارهای مشخص، عملی و قابل اجرا پیشنهاد بده.
+
+موضوعات مناسب:
+
+اضطراب و استرس، احساسات، روابط، اعتمادبه‌نفس،
+
+انگیزه، درس، کار، عادت‌ها، تصمیم‌گیری و مشکلات روزمره.
+
+جواب‌ها را طبیعی، انسانی، گرم و نسبتاً کوتاه نگه دار.
+
+از جملات کلیشه‌ای و نصیحت‌های توخالی دوری کن.
+
+خودت را پزشک یا روان‌درمانگر واقعی معرفی نکن و تشخیص پزشکی نده.
+
+اگر موضوعی خارج از حوزه AmirCalm مثل سیاست، جنگ، اخبار یا بحث‌های جنجالی مطرح شد،
+
+محترمانه گفتگو را دوباره به آرامش و زندگی کاربر برگردان.
+
+اگر کاربر در خطر فوری یا قصد آسیب به خود یا دیگری را مطرح کرد،
+
+با آرامش توصیه کن فوراً با یک فرد قابل اعتماد و خدمات اضطراری محلی تماس بگیرد.
+
+هدف اصلی تو:
+
+کمک واقعی، آرامش، وضوح ذهن و یک قدم عملی برای بهتر شدن.
+
+`,
+
+      input: userMessage
+
+    });
+
+    const reply = response.output_text;
+
     console.log("OPENAI RESPONSE RECEIVED");
 
-    res.json({
+    return res.json({
 
-      reply: response.output_text || "فعلاً پاسخی دریافت نکردم. 🤍"
+      reply: reply || "فعلاً نتوانستم پاسخ مناسبی آماده کنم. 🤍"
 
     });
 
@@ -122,7 +150,7 @@ app.post("/api/chat", async (req, res) => {
 
     console.error("OPENAI ERROR:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
 
       error: "ارتباط با هوش مصنوعی برقرار نشد."
 
@@ -134,6 +162,4 @@ app.post("/api/chat", async (req, res) => {
 
 app.listen(port, "0.0.0.0", () => {
 
-  console.log(`AmirCalm server running on port ${port}`);
-
-});
+  console.log(`AmirCalm server running on port ${port
