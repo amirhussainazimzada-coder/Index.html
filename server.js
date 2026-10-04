@@ -3,6 +3,7 @@ import OpenAI from "openai";
 
 const app = express();
 const port = process.env.PORT || 3000;
+
 const apiKey = process.env.OPENAI_API_KEY
   ?.replace(/[\u200B-\u200D\u200E\u200F\uFEFF]/g, "")
   .trim();
@@ -11,9 +12,7 @@ const client = new OpenAI({
   apiKey
 });
 
-  
-});
-
+// CORS
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
@@ -31,6 +30,7 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
+// Home
 app.get("/", (req, res) => {
   res.json({
     service: "AmirCalm AI",
@@ -38,12 +38,14 @@ app.get("/", (req, res) => {
   });
 });
 
+// Health check
 app.get("/health", (req, res) => {
   res.json({
     status: "ok"
   });
 });
 
+// AI Chat
 app.post("/api/chat", async (req, res) => {
   try {
     const message = req.body?.message;
@@ -86,7 +88,6 @@ app.post("/api/chat", async (req, res) => {
     });
 
   } catch (error) {
-
     console.error("AmirCalm API Error:", error);
 
     res.status(500).json({
@@ -95,6 +96,6 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
+// Start server
 app.listen(port, "0.0.0.0", () => {
   console.log(`AmirCalm server running on port ${port}`);
-});
