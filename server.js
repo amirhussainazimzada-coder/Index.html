@@ -1,222 +1,187 @@
 import express from "express";
+
 import OpenAI from "openai";
-import { Client, TablesDB, ID } from "node-appwrite";
+
+import path from "path";
+
+import { fileURLToPath } from "url";
 
 const app = express();
+
 const port = process.env.PORT || 3000;
+
+// برای پیدا کردن مسیر فایل‌های سایت
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
+
+// OpenAI
+
+const apiKey = process.env.OPENAI_API_KEY
+
+  ?.replace(/[\u200B-\u200D\u200E\u200F\uFEFF]/g, "")
+
+  .trim();
+
+const client = new OpenAI({
+
+  apiKey
+
+});
+
+// CORS
+
+app.use((req, res, next) => {
+
+  res.header("Access-Control-Allow-Origin", "*");
+
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+
+  res.header(
+
+    "Access-Control-Allow-Headers",
+
+    "Origin, X-Requested-With, Content-Type, Accept"
+
+  );
+
+  if (req.method === "OPTIONS") {
+
+    return res.sendStatus(204);
+
+  }
+
+  next();
+
+});
 
 app.use(express.json());
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  next();
-});
+// ================================
 
-/* =========================
-   APPWRITE
-========================= */
+// AmirCalm Website
 
-const appwriteEndpoint =
-  process.env.APPWRITE_ENDPOINT || "";
+// ================================
 
-const appwriteProjectId =
-  process.env.APPWRITE_PROJECT_ID || "";
+// فایل‌های سایت را نمایش بده
 
-const appwriteApiKey =
-  process.env.APPWRITE_API_KEY || "";
+app.use(express.static(__dirname));
 
-const appwriteDatabaseId =
-  process.env.APPWRITE_DATABASE_ID || "";
-
-const appwriteTableId =
-  process.env.APPWRITE_TABLE_ID || "";
-
-let tablesDB = null;
-
-if (
-  appwriteEndpoint &&
-  appwriteProjectId &&
-  appwriteApiKey &&
-  appwriteDatabaseId &&
-  appwriteTableId
-) {
-  const appwriteClient = new Client();
-
-  appwriteClient
-    .setEndpoint(appwriteEndpoint)
-    .setProject(appwriteProjectId)
-    .setKey(appwriteApiKey);
-
-  tablesDB = new TablesDB(appwriteClient);
-
-  console.log("APPWRITE CONNECTED");
-} else {
-  console.log("APPWRITE CONFIG IS INCOMPLETE");
-}
-
-/* =========================
-   ANALYTICS HELPER
-========================= */
-
-async function saveAnalytics(userId, event, name = "") {
-  if (!tablesDB) {
-    return;
-  }
-
-  try {
-    await tablesDB.createRow({
-      databaseId: appwriteDatabaseId,
-      tableId: appwriteTableId,
-      rowId: ID.unique(),
-      data: {
-        user_id: String(userId || "anonymous"),
-        event: String(event || "unknown"),
-        name: String(name || "")
-      }
-    });
-
-    console.log("ANALYTICS SAVED");
-  } catch (error) {
-    console.error("APPWRITE ANALYTICS ERROR:", error);
-  }
-}
-
-/* =========================
-   HOME
-========================= */
+// صفحه اصلی سایت
 
 app.get("/", (req, res) => {
-  res.json({
-    service: "AmirCalm AI",
-    status: "online"
-  });
+
+  res.sendFile(path.join(__dirname, "index.html"));
+
 });
 
-/* =========================
-   HEALTH
-========================= */
+// ================================
+
+// Health Check
+
+// ================================
 
 app.get("/health", (req, res) => {
+
   res.json({
+
     status: "ok"
+
   });
+
 });
 
-/* =========================
-   CHAT
-========================= */
+// ================================
+
+// AI Chat
+
+// ================================
 
 app.post("/api/chat", async (req, res) => {
-  console.log("CHAT POST RECEIVED");
 
   try {
-    const userMessage = req.body?.message;
 
-    const userId =
-      req.body?.user_id || "anonymous";
+    const message = req.body?.message;
 
-    const name =
-      req.body?.name || "";
+    if (!message || typeof message !== "string") {
 
-    if (!userMessage || typeof userMessage !== "string") {
       return res.status(400).json({
-        error: "پیام نامعتبر است."
+
+        error: "پیام خالی است."
+
       });
+
     }
-
-    const rawKey = process.env.OPENAI_API_KEY || "";
-
-    const apiKey = rawKey
-      .replace(/[\u200B-\u200D\u200E\u200F\uFEFF]/g, "")
-      .trim();
-
-    if (!apiKey) {
-      console.error("OPENAI_API_KEY is missing");
-
-      return res.status(500).json({
-        error: "کلید OpenAI تنظیم نشده است."
-      });
-    }
-
-    console.log("SENDING TO OPENAI");
-
-    const client = new OpenAI({
-      apiKey: apiKey
-    });
 
     const response = await client.responses.create({
-      model: "gpt-6-luna",
+
+      model: "gpt-5-mini",
 
       instructions: `
-تو همراه هوشمند AmirCalm هستی.
 
-وظیفه‌ات کمک به آرامش، سلامت روانی عمومی، رشد شخصی و حل مشکلات روزمره کاربر است.
+تو AmirCalm هستی؛ یک همراه آرام، مهربان و حرفه‌ای.
 
-با مهربانی، آرامش و بدون قضاوت صحبت کن.
+با کاربر به زبان خودش صحبت کن.
 
-اول حرف کاربر را خوب درک کن و اگر لازم بود یک سؤال کوتاه و هوشمندانه بپرس.
+کوتاه، طبیعی و انسانی جواب بده.
 
-بعد راهکارهای مشخص، عملی و قابل اجرا پیشنهاد بده.
+بیشتر گوش بده و کمتر سخنرانی کن.
 
-موضوعات مناسب:
+قضاوت نکن.
 
-اضطراب و استرس، احساسات، روابط، اعتمادبه‌نفس،
-انگیزه، درس، کار، عادت‌ها، تصمیم‌گیری و مشکلات روزمره.
+کاربر را شرمنده نکن.
 
-جواب‌ها را طبیعی، انسانی، گرم و نسبتاً کوتاه نگه دار.
+خودت را انسان یا داکتر معرفی نکن.
 
-از جملات کلیشه‌ای و نصیحت‌های توخالی دوری کن.
+تشخیص پزشکی یا روان‌شناختی نده.
 
-خودت را پزشک یا روان‌درمانگر واقعی معرفی نکن و تشخیص پزشکی نده.
+اگر کاربر ناراحت، ترسیده یا مضطرب است،
 
-اگر موضوعی خارج از حوزه AmirCalm مثل سیاست، جنگ، اخبار یا بحث‌های جنجالی مطرح شد،
-محترمانه گفتگو را دوباره به آرامش و زندگی کاربر برگردان.
+اول با آرامش احساس او را درک کن و بعد پاسخ بده.
 
-اگر کاربر در خطر فوری یا قصد آسیب به خود یا دیگری را مطرح کرد،
-با آرامش توصیه کن فوراً با یک فرد قابل اعتماد و خدمات اضطراری محلی تماس بگیرد.
+اگر موضوع جدی یا خطرناک بود،
 
-هدف اصلی تو:
+کاربر را به کمک حرفه‌ای و افراد قابل اعتماد هدایت کن.
 
-کمک واقعی، آرامش، وضوح ذهن و یک قدم عملی برای بهتر شدن.
-`,
+هدف AmirCalm ایجاد یک فضای امن،
 
-      input: userMessage
+آرام و محترمانه برای گفت‌وگو است.
+
+      `,
+
+      input: message
+
     });
 
-    const reply = response.output_text;
+    res.json({
 
-    console.log("OPENAI RESPONSE RECEIVED");
+      reply: response.output_text
 
-    /* ثبت فقط رویداد، نه متن گفت‌وگو */
-    await saveAnalytics(
-      userId,
-      "chat",
-      name
-    );
-
-    return res.json({
-      reply:
-        reply ||
-        "فعلاً نتوانستم پاسخ مناسبی آماده کنم. 🤍"
     });
 
   } catch (error) {
-    console.error("OPENAI ERROR:", error);
 
-    return res.status(500).json({
-      error: "ارتباط با هوش مصنوعی برقرار نشد."
+    console.error("AmirCalm API Error:", error);
+
+    res.status(500).json({
+
+      error: "در حال حاضر امکان پاسخ‌گویی وجود ندارد."
+
     });
+
   }
+
 });
 
-/* =========================
-   START SERVER
-========================= */
+// ================================
+
+// Start Server
+
+// ================================
 
 app.listen(port, "0.0.0.0", () => {
-  console.log(
-    "AmirCalm server running on port " + port
-  );
+
+  console.log(`AmirCalm server running on port ${port}`);
+
 });
