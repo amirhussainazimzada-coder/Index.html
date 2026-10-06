@@ -4,12 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>AmirCalm</title>
+  <title>DARYA — جایی برای آرام‌تر شدن</title>
 
-  <meta name="description" content="AmirCalm — جایی برای آرامش، امید و گفت‌وگو.">
+  <meta name="description" content="DARYA؛ جایی برای گفت‌وگو، آرامش و پیدا کردن قدم بعدی.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
+    :root {
+      --bg: #080b12;
+      --bg2: #0d111b;
+      --surface: rgba(255,255,255,.045);
+      --surface2: rgba(255,255,255,.065);
+      --line: rgba(255,255,255,.09);
+      --text: #f5f6fa;
+      --muted: #969dac;
+      --soft: #c9cdd6;
+      --accent: #9aa7ff;
+      --accent2: #7787ff;
+    }
 
     * {
       margin: 0;
@@ -17,168 +32,408 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: 'Vazirmatn', sans-serif;
+      font-family: "Vazirmatn", sans-serif;
       min-height: 100vh;
-      color: #f5f7ff;
+      color: var(--text);
       background:
-        radial-gradient(circle at 20% 20%, rgba(150, 180, 255, 0.16), transparent 32%),
-        radial-gradient(circle at 80% 70%, rgba(170, 130, 255, 0.14), transparent 35%),
-        linear-gradient(145deg, #08111f, #101b32 48%, #11162b);
+        radial-gradient(circle at 50% -10%, rgba(119,135,255,.10), transparent 35%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
       overflow-x: hidden;
     }
 
-    .stars {
+    body::before {
+      content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: 0.45;
+      opacity: .18;
       background-image:
-        radial-gradient(circle, rgba(255,255,255,.7) 1px, transparent 1px),
-        radial-gradient(circle, rgba(255,255,255,.35) 1px, transparent 1px);
-      background-size: 90px 90px, 140px 140px;
-      background-position: 20px 30px, 70px 80px;
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 70px 70px;
+      mask-image: linear-gradient(to bottom, black, transparent 80%);
     }
 
-    .container {
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .page {
       position: relative;
-      z-index: 2;
-      width: 100%;
-      max-width: 520px;
-      min-height: 100vh;
+      z-index: 1;
+      width: min(100%, 1080px);
       margin: auto;
-      padding: 28px 20px 35px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      padding: 24px 20px 50px;
     }
 
-    .logo {
-      width: 74px;
-      height: 74px;
-      border-radius: 24px;
+    /* TOP BAR */
+
+    .topbar {
+      width: 100%;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      margin-bottom: 25px;
-
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.13);
-      box-shadow:
-        0 15px 45px rgba(0,0,0,.25),
-        inset 0 1px rgba(255,255,255,.08);
-
-      backdrop-filter: blur(18px);
+      justify-content: space-between;
+      margin-bottom: 85px;
     }
 
     .brand {
-      font-size: 18px;
-      font-weight: 600;
-      letter-spacing: .5px;
-      margin-bottom: 28px;
-      color: #dce6ff;
+      display: flex;
+      align-items: center;
+      gap: 11px;
     }
 
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 13px;
+      background:
+        linear-gradient(145deg, #b4bcff, #707fff);
+      transform: rotate(12deg);
+      box-shadow: 0 8px 30px rgba(119,135,255,.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      width: 15px;
+      height: 32px;
+      background: rgba(255,255,255,.25);
+      border-radius: 50%;
+      transform: rotate(-20deg);
+      left: 10px;
+      top: 3px;
+    }
+
+    .brand-name {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #9aa7ff;
+      box-shadow: 0 0 14px rgba(154,167,255,.7);
+    }
+
+    /* HERO */
+
     .hero {
+      max-width: 760px;
+      margin: auto;
       text-align: center;
-      animation: fadeUp 1s ease;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 18px;
+      letter-spacing: .5px;
     }
 
     .hero h1 {
-      font-size: clamp(28px, 7vw, 42px);
-      line-height: 1.55;
-      font-weight: 600;
-      margin-bottom: 20px;
-      background: linear-gradient(90deg, #ffffff, #cddcff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: clamp(36px, 7vw, 68px);
+      line-height: 1.3;
+      font-weight: 500;
+      letter-spacing: -1.5px;
+      margin-bottom: 22px;
     }
 
-    .subtitle {
-      font-size: 15px;
-      line-height: 2;
-      color: #aebbd5;
-      max-width: 390px;
+    .hero h1 span {
+      color: var(--soft);
+    }
+
+    .hero p {
+      max-width: 590px;
       margin: auto;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 2.1;
     }
 
-    .dua {
-      width: 100%;
-      margin-top: 42px;
-      padding: 25px 21px;
-      border-radius: 25px;
-
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.11);
-      box-shadow: 0 20px 60px rgba(0,0,0,.2);
-
-      backdrop-filter: blur(20px);
-      animation: fadeUp 1.3s ease;
-    }
-
-    .dua-icon {
-      text-align: center;
-      font-size: 21px;
-      margin-bottom: 14px;
-    }
-
-    .dua p {
-      text-align: center;
+    .main-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 34px;
+      padding: 15px 25px;
+      border-radius: 15px;
+      background: #f2f3f7;
+      color: #10131b;
       font-size: 14px;
-      line-height: 2.15;
-      color: #e5eaf6;
+      font-weight: 600;
+      transition: .25s ease;
+      box-shadow: 0 14px 40px rgba(0,0,0,.22);
+    }
+
+    .main-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 48px rgba(0,0,0,.3);
+    }
+
+    .main-button svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* CARDS */
+
+    .features {
+      margin-top: 90px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .feature {
+      display: block;
+      padding: 22px;
+      min-height: 170px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--surface);
+      transition: .3s ease;
+      backdrop-filter: blur(18px);
+    }
+
+    .feature:hover {
+      background: var(--surface2);
+      border-color: rgba(154,167,255,.2);
+      transform: translateY(-4px);
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 13px;
+      background: rgba(154,167,255,.08);
+      border: 1px solid rgba(154,167,255,.12);
+      color: var(--accent);
+      margin-bottom: 27px;
+    }
+
+    .icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .feature h3 {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.9;
+    }
+
+    /* DUA */
+
+    .dua-section {
+      margin-top: 80px;
+      padding: 36px 28px;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.025));
+      backdrop-filter: blur(20px);
+    }
+
+    .dua-label {
+      color: var(--accent);
+      font-size: 12px;
+      margin-bottom: 22px;
+    }
+
+    .dua-text {
+      max-width: 650px;
+      margin: auto;
+      color: #e9ebf2;
+      font-size: 16px;
+      line-height: 2.4;
       font-weight: 400;
     }
 
-    .amin {
-      display: block;
-      margin-top: 13px;
-      text-align: center;
-      color: #bfcdf0;
-      font-size: 13px;
-    }
-
-    .start {
-      margin-top: 32px;
-      width: 100%;
-      max-width: 330px;
-      border: none;
-      padding: 16px 25px;
-      border-radius: 18px;
-      color: white;
-      font-family: inherit;
-      font-size: 15px;
-      font-weight: 600;
+    .amin-button {
+      margin-top: 25px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 12px 19px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--soft);
       cursor: pointer;
-
-      background: linear-gradient(135deg, #6e83ff, #8f6de8);
-      box-shadow: 0 12px 35px rgba(110,131,255,.25);
-
       transition: .25s ease;
     }
 
-    .start:hover {
+    .amin-button:hover {
+      background: rgba(154,167,255,.09);
+      border-color: rgba(154,167,255,.2);
       transform: translateY(-2px);
-      box-shadow: 0 17px 40px rgba(110,131,255,.35);
     }
 
-    .start:active {
-      transform: scale(.98);
+    .amin-button svg {
+      width: 16px;
+      height: 16px;
     }
 
-    .footer {
-      margin-top: 32px;
-      font-size: 11px;
-      color: #71809c;
+    /* VERSE */
+
+    .verse {
+      margin-top: 35px;
       text-align: center;
     }
 
-    @keyframes fadeUp {
+    .verse-text {
+      color: #d7dbe5;
+      font-family: serif;
+      font-size: 20px;
+      line-height: 2.3;
+    }
+
+    .verse-translation {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 10px;
+    }
+
+    /* TOAST */
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 28px;
+      transform: translate(-50%, 25px) scale(.96);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 50;
+
+      width: min(90%, 420px);
+      padding: 17px 20px;
+      text-align: center;
+
+      background: rgba(20,24,35,.94);
+      border: 1px solid rgba(154,167,255,.18);
+      border-radius: 16px;
+      box-shadow: 0 20px 70px rgba(0,0,0,.45);
+      backdrop-filter: blur(20px);
+
+      color: #f1f2f6;
+      font-size: 13px;
+
+      transition: .35s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1);
+    }
+
+    /* FOOTER */
+
+    footer {
+      margin-top: 65px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      text-align: center;
+      color: #686f7d;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 20px 16px 40px;
+      }
+
+      .topbar {
+        margin-bottom: 70px;
+      }
+
+      .status {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 39px;
+      }
+
+      .hero p {
+        font-size: 14px;
+      }
+
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: 65px;
+      }
+
+      .feature {
+        min-height: 155px;
+        padding: 18px;
+      }
+
+      .dua-section {
+        margin-top: 55px;
+        padding: 30px 20px;
+      }
+
+      .dua-text {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .features {
+        gap: 9px;
+      }
+
+      .feature {
+        padding: 15px;
+      }
+
+      .hero h1 {
+        font-size: 35px;
+      }
+    }
+
+    @keyframes appear {
       from {
         opacity: 0;
-        transform: translateY(18px);
+        transform: translateY(15px);
       }
 
       to {
@@ -186,52 +441,241 @@
         transform: translateY(0);
       }
     }
+
+    .hero,
+    .features,
+    .dua-section,
+    .verse {
+      animation: appear .7s ease both;
+    }
+
+    .features {
+      animation-delay: .12s;
+    }
+
+    .dua-section {
+      animation-delay: .2s;
+    }
+
+    .verse {
+      animation-delay: .28s;
+    }
   </style>
 </head>
 
 <body>
 
-  <div class="stars"></div>
+  <div class="page">
 
-  <main class="container">
+    <!-- TOP BAR -->
 
-    <div class="logo">🌙</div>
+    <header class="topbar">
 
-    <div class="brand">AmirCalm</div>
+      <a href="Index.html" class="brand">
+        <div class="brand-mark"></div>
+        <div class="brand-name">DARYA</div>
+      </a>
 
-    <section class="hero">
-      <h1>آرام باش؛<br>هنوز چیزهای زیبایی در راه است.</h1>
+      <div class="status">
+        <span class="status-dot"></span>
+        فضای امن
+      </div>
 
-      <p class="subtitle">
-        اینجا جایی‌ست برای نفس کشیدن، آرام شدن و دوباره پیدا کردن امید.
-      </p>
-    </section>
+    </header>
 
-    <section class="dua">
-      <div class="dua-icon">🤍</div>
 
-      <p>
-        خدایا من، و هدیه‌ای را که از سوی خودت به من سپردی،
-        همیشه در پناهت نگه دار و دل‌هایمان را مملو از عشق و مهربانی کن.
-      </p>
+    <!-- HERO -->
 
-      <span class="amin">الهی آمین 🌙</span>
-    </section>
+    <main>
 
-    <button class="start" onclick="startCalm()">
-      شروع یک گفت‌وگوی آرام ✨
-    </button>
+      <section class="hero">
 
-    <div class="footer">
-      ساخته شده برای لحظه‌هایی که دلت کمی آرامش می‌خواهد.
-    </div>
+        <div class="eyebrow">برای ذهنی که کمی مکث می‌خواهد</div>
 
-  </main>
+        <h1>
+          گاهی فقط باید
+          <span>کمی آرام‌تر شد.</span>
+        </h1>
+
+        <p>
+          اینجا می‌توانی حرف بزنی، فکرهایت را مرتب کنی
+          و برای قدم بعدی کمی آرامش پیدا کنی.
+        </p>
+
+        <a href="chat.html" class="main-button">
+
+          شروع یک گفت‌وگوی آرام
+
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M5 12h13"/>
+            <path d="m13 6 6 6-6 6"/>
+          </svg>
+
+        </a>
+
+      </section>
+
+
+      <!-- FEATURES -->
+
+      <section class="features">
+
+        <a href="chat.html" class="feature">
+
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+              <path d="M20 15a4 4 0 0 1-4 4H9l-5 3v-7a4 4 0 0 1-1-2.5V7a4 4 0 0 1 4-4h9a4 4 0 0 1 4 4z"/>
+            </svg>
+          </div>
+
+          <h3>گفت‌وگو</h3>
+
+          <p>
+            هر چیزی که در ذهنت هست، بدون قضاوت بیان کن.
+          </p>
+
+        </a>
+
+
+        <a href="calm.html" class="feature">
+
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+              <path d="M3 12c3-5 6-5 9 0s6 5 9 0"/>
+              <path d="M3 17c3-5 6-5 9 0s6 5 9 0"/>
+            </svg>
+          </div>
+
+          <h3>مکث</h3>
+
+          <p>
+            چند لحظه از شلوغی فاصله بگیر و دوباره نفس بکش.
+          </p>
+
+        </a>
+
+
+        <a href="dua.html" class="feature">
+
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+              <path d="M6 11V5a2 2 0 0 1 4 0v5"/>
+              <path d="M10 10V4a2 2 0 0 1 4 0v6"/>
+              <path d="M14 10V6a2 2 0 0 1 4 0v8"/>
+              <path d="M6 9a2 2 0 0 0-4 0v4c0 5 3 8 8 8h3c5 0 8-3 8-8"/>
+            </svg>
+          </div>
+
+          <h3>دعا</h3>
+
+          <p>
+            چند کلمه برای آرامش، امید و دلگرمی.
+          </p>
+
+        </a>
+
+
+        <a href="chat.html" class="feature">
+
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+              <path d="m12 3 1.4 5.6L19 10l-5.6 1.4L12 17l-1.4-5.6L5 10l5.6-1.4z"/>
+              <path d="m19 16 .7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7z"/>
+            </svg>
+          </div>
+
+          <h3>قدم بعدی</h3>
+
+          <p>
+            اگر نمی‌دانی از کجا شروع کنی، با هم قدم بعدی را پیدا می‌کنیم.
+          </p>
+
+        </a>
+
+      </section>
+
+
+      <!-- PERSONAL DUA -->
+
+      <section class="dua-section">
+
+        <div class="dua-label">
+          یک دعای شخصی
+        </div>
+
+        <div class="dua-text">
+          خدایا، من و هدیه‌ای را که از سوی خودت به من سپردی،
+          همیشه در پناه خودت نگه دار.
+          دل‌هایمان را از عشق، مهربانی و آرامش پر کن.
+        </div>
+
+        <button class="amin-button" onclick="sayAmin()">
+
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M12 5v14"/>
+            <path d="M5 12h14"/>
+          </svg>
+
+          الهی آمین
+
+        </button>
+
+      </section>
+
+
+      <!-- QURAN -->
+
+      <section class="verse">
+
+        <div class="verse-text">
+          فَإِنَّ مَعَ الْعُسْرِ يُسْرًا ۝<br>
+          إِنَّ مَعَ الْعُسْرِ يُسْرًا
+        </div>
+
+        <div class="verse-translation">
+          پس یقیناً با سختی آسانی است؛ یقیناً با سختی آسانی است.
+          <br>
+          سورهٔ شرح، آیات ۵–۶
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+      یک جای آرام برای فکر کردن، حرف زدن و دوباره شروع کردن.
+      <br>
+      DARYA
+    </footer>
+
+  </div>
+
+
+  <!-- TOAST -->
+
+  <div id="toast" class="toast">
+    تشکر میکنم که به دعایم آمین گفتی بهترینم♥️
+  </div>
+
 
   <script>
-    function startCalm() {
-      alert("به زودی اینجا با AmirCalm گفت‌وگو می‌کنی 🤍");
+
+    function sayAmin() {
+
+      const toast = document.getElementById("toast");
+
+      toast.classList.add("show");
+
+      setTimeout(function() {
+        toast.classList.remove("show");
+      }, 4000);
+
     }
+
   </script>
 
-</bo
+</body>
+</html>
